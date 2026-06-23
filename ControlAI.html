@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Control AI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap');
+
+        :root {
+            --bg-blue: #1ab3ff;
+            --border-purple: #3126a1;
+            --border-cyan: #00e1ff;
+            --card-white: #fcfcfc;
+            --text-main: #333333;
+            --opt-a: #ff8c00;
+            --opt-a-dark: #cc7000;
+            --opt-b: #33ccff;
+            --opt-b-dark: #29a3cc;
+            --opt-c: #4433cc;
+            --opt-c-dark: #3629a3;
+            --opt-d: #ffca28;
+            --opt-d-dark: #cfa320;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Fredoka', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--border-purple);
+            background-image: radial-gradient(circle at 50% 50%, var(--bg-blue) 0%, var(--border-purple) 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            color: var(--text-main);
+        }
+
+        /* Botón de música flotante */
+        .mute-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--card-white);
+            border: 3px solid var(--border-cyan);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 0 #cccccc;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+        }
+
+        .mute-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #cccccc;
+        }
+
+        .header-container {
+            width: 100%;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .logo-box {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background: var(--card-white);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 0 #cccccc, 0 15px 20px rgba(0,0,0,0.3);
+            border: 4px solid var(--border-cyan);
+            transition: transform 0.3s ease;
+        }
+
+        .svg-icon {
+            width: 50px;
+            height: 50px;
+            fill: none;
+            stroke: var(--opt-a);
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .app-title {
+            margin-top: 1.2rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--card-white);
+            text-shadow: 0 4px 0 var(--border-purple), 0 8px 10px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .questionnaire-wrapper {
+            width: 100%;
+            max-width: 600px;
+            padding: 0 15px 40px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .q-card {
+            background: var(--card-white);
+            border-radius: 24px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 0 #e0e0e0, 0 20px 30px rgba(0,0,0,0.2), inset 0 0 0 6px rgba(0, 225, 255, 0.1);
+            width: 100%;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .q-header {
+            font-size: 1.1rem;
+            color: var(--opt-a);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .q-title {
+            font-size: 1.4rem;
+            line-height: 1.3;
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-align: center;
+            color: var(--border-purple);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .option-btn {
+            border: none;
+            color: white;
+            padding: 18px 20px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+            touch-action: manipulation;
+        }
+
+        .option-btn:active {
+            transform: translateY(6px);
+        }
+
+        .opt-1 { background-color: var(--opt-a); box-shadow: 0 6px 0 var(--opt-a-dark); }
+        .opt-1:active { box-shadow: 0 0 0 var(--opt-a-dark); }
+
+        .opt-2 { background-color: var(--opt-b); box-shadow: 0 6px 0 var(--opt-b-dark); }
+        .opt-2:active { box-shadow: 0 0 0 var(--opt-b-dark); }
+
+        .opt-3 { background-color: var(--opt-c); box-shadow: 0 6px 0 var(--opt-c-dark); }
+        .opt-3:active { box-shadow: 0 0 0 var(--opt-c-dark); }
+
+        .opt-4 { background-color: var(--opt-d); box-shadow: 0 6px 0 var(--opt-d-dark); color: var(--border-purple); }
+        .opt-4:active { box-shadow: 0 0 0 var(--opt-d-dark); }
+
+        .fade-out {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        @media (min-width: 1024px) {
+            body { perspective: 1200px; }
+            .header-container { padding: 40px 0; transform-style: preserve-3d; }
+            .logo-box { width: 120px; height: 120px; box-shadow: 0 10px 0 #cccccc, 0 20px 25px rgba(0,0,0,0.3); }
+            .svg-icon { width: 60px; height: 60px; }
+            .app-title { font-size: 3rem; margin-top: 1.5rem; }
+            .questionnaire-wrapper { perspective: 1500px; transform-style: preserve-3d; max-width: 700px; padding: 20px; }
+            .q-card { padding: 40px; box-shadow: 0 15px 0 #e0e0e0, 0 30px 40px rgba(0,0,0,0.3), inset 0 0 0 8px rgba(0, 225, 255, 0.1); }
+            .q-title { font-size: 1.8rem; margin-bottom: 40px; }
+            .option-btn { font-size: 1.2rem; padding: 20px 25px; justify-content: flex-start; text-align: left; }
+            .opt-1 { box-shadow: 0 8px 0 var(--opt-a-dark); }
+            .opt-2 { box-shadow: 0 8px 0 var(--opt-b-dark); }
+            .opt-3 { box-shadow: 0 8px 0 var(--opt-c-dark); }
+            .opt-4 { box-shadow: 0 8px 0 var(--opt-d-dark); }
+            .option-btn:active { transform: translateY(8px); }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" src="quiz.mp3" loop autoplay></audio>
+    <button id="muteBtn" class="mute-btn">🔊</button>
+
+    <header class="header-container">
+        <div class="logo-box" id="logo3d">
+            <svg class="svg-icon" viewBox="0 0 24 24">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                <path d="M12 8l3-3 3 3M15 5v14" stroke="var(--opt-b)" stroke-width="2"></path>
+            </svg>
+        </div>
+        <h1 class="app-title" id="title3d">Control AI</h1>
+    </header>
+
+    <main class="questionnaire-wrapper">
+        <div class="q-card" id="card3d">
+            <div class="q-header">
+                <span>Cuestionario</span>
+                <span id="progressIndicator">1 / 15</span>
+            </div>
+            <h3 class="q-title" id="questionText">¿Qué tan frecuente usas la IA en tus actividades académicas?</h3>
+            <div class="options-grid" id="optionsContainer">
+                <button class="option-btn opt-1" onclick="nextQuestion()">
+                    <span id="opt1Text">Constantemente (Para casi todo)</span>
+                </button>
+                <button class="option-btn opt-2" onclick="nextQuestion()">
+                    <span id="opt2Text">Frecuentemente (Como apoyo habitual)</span>
+                </button>
+                <button class="option-btn opt-3" onclick="nextQuestion()">
+                    <span id="opt3Text">A veces (Solo cuando estoy confundido)</span>
+                </button>
+                <button class="option-btn opt-4" onclick="nextQuestion()">
+                    <span id="opt4Text">Nunca (Hago todo manualmente)</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const bgMusic = document.getElementById('bgMusic');
+        const muteBtn = document.getElementById('muteBtn');
+
+        // Control de sonido
+        muteBtn.addEventListener('click', () => {
+            if (bgMusic.muted) {
+                bgMusic.muted = false;
+                muteBtn.innerText = '🔊';
+            } else {
+                bgMusic.muted = true;
+                muteBtn.innerText = '🔇';
+            }
+        });
+
+        // Intentar reproducir al iniciar
+        const playAudio = () => { 
+            bgMusic.play().catch(e => { console.log("Interacción requerida para audio."); }); 
+        };
+        window.addEventListener('load', playAudio);
+        document.addEventListener('click', playAudio, { once: true });
+        document.addEventListener('touchstart', playAudio, { once: true });
+
+        // Preguntas
+        const questions = [
+            { q: "¿Qué tan frecuente usas la IA en tus actividades académicas / trabajos de clase?", o: ["Constantemente (Para casi todo)", "Frecuentemente (Como apoyo habitual)", "A veces (Solo cuando me estanco)", "Nunca (Hago todo manualmente)"] },
+            { q: "¿Cuánto tiempo al día pasas utilizando herramientas de IA?", o: ["Más de 4 horas", "Entre 2 y 4 horas", "Menos de 1 hora", "Casi nada"] },
+            { q: "¿Qué tareas podrías hacer por tu cuenta sin ayuda de una IA?", o: ["Muy pocas, dependo de ella", "Solo las más sencillas", "La mayoría, pero tardaría más", "Todas sin problema"] },
+            { q: "¿Has dejado de aprender algo porque la IA lo hace por ti?", o: ["Sí, prefiero que lo resuelva", "A veces, por falta de tiempo", "No, verifico lo que hace", "Nunca, sigo estudiando igual"] },
+            { q: "¿Cuándo fue la última vez que resolviste un problema complejo sin ayuda tecnológica?", o: ["No lo recuerdo", "Hace varias semanas", "Hace unos días", "Hoy mismo"] },
+            { q: "¿Te resulta difícil tomar decisiones sin pedir opinión a una IA?", o: ["Sí, dudo mucho de mí", "A veces prefiero confirmar", "Rara vez le pregunto eso", "No, confío en mi propio criterio"] },
+            { q: "¿Sientes ansiedad o incomodidad cuando no puedes acceder a una IA?", o: ["Mucha, me siento bloqueado", "Me genera algo de estrés", "Casi nada, me adapto", "Nada en absoluto"] },
+            { q: "¿Cuántas veces consultas una IA antes de intentar encontrar una respuesta por tu cuenta?", o: ["Siempre voy directo a la IA", "Lo intento un poco y desisto", "Solo si me estanco mucho", "Primero agoto mis propios recursos"] },
+            { q: "¿Hay alguna tarea en la que dependes demasiado de la IA?", o: ["Redacción y resúmenes", "Resolución de ejercicios matemáticos", "Búsqueda de ideas y creatividad", "No tengo una dependencia fuerte"] },
+            { q: "¿Qué has aprendido realmente gracias a la IA y qué solo has copiado?", o: ["Siento que en su mayoría he copiado", "He aprendido algunas cosas nuevas", "Mitad y mitad", "Realmente he aprendido y comprendido"] },
+            { q: "¿Confías más en tu criterio o en las respuestas de una IA?", o: ["Confío ciegamente en la IA", "En la IA, pero trato de revisar", "Confío más en mi conocimiento", "Solo confío en mi propio criterio"] },
+            { q: "¿Crees que tu creatividad ha mejorado o disminuido desde que empezaste a usar IA?", o: ["Ha disminuido, pienso menos por mí", "Se mantiene igual", "Ha mejorado un poco", "Me ha potenciado la imaginación enormemente"] },
+            { q: "¿Qué ganarías si redujeras tu uso de IA durante una semana?", o: ["Perdería mucho tiempo", "Estaría un poco frustrado", "Mejoraría mi concentración", "Sería mucho más independiente"] },
+            { q: "¿Cuál sería tu primer paso para reducir gradualmente su uso?", o: ["No estoy seguro", "Poner límites de tiempo diarios", "Intentar primero por mi cuenta siempre", "Desinstalar atajos temporalmente"] },
+            { q: "¿Cómo imaginas tu rutina diaria si usaras la IA solo cuando fuera estrictamente necesaria?", o: ["Sería muy lenta y pesada", "Requeriría mucho más esfuerzo mental", "Sería más productiva a largo plazo", "Me haría sentir más realizado e inteligente"] }
+        ];
+
+        let currentIndex = 0;
+
+        function nextQuestion() {
+            const card = document.getElementById('card3d');
+            card.classList.add('fade-out');
+
+            setTimeout(() => {
+                currentIndex++;
+                
+                if (currentIndex < questions.length) {
+                    document.getElementById('progressIndicator').innerText = `${currentIndex + 1} / 15`;
+                    document.getElementById('questionText').innerText = questions[currentIndex].q;
+                    document.getElementById('opt1Text').innerText = questions[currentIndex].o[0];
+                    document.getElementById('opt2Text').innerText = questions[currentIndex].o[1];
+                    document.getElementById('opt3Text').innerText = questions[currentIndex].o[2];
+                    document.getElementById('opt4Text').innerText = questions[currentIndex].o[3];
+                } else {
+                    document.getElementById('progressIndicator').innerText = "Completado";
+                    document.getElementById('questionText').innerText = "¡Gracias por reflexionar sobre tu uso de la IA! Es el primer paso para retomar el control.";
+                    document.getElementById('optionsContainer').innerHTML = `
+                        <button class="option-btn opt-2" onclick="location.reload()">
+                            <span>Volver a intentar</span>
+                        </button>`;
+                }
+
+                card.classList.remove('fade-out');
+            }, 300);
+        }
+
+        // Efecto 3D Desktop
+        const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+        if (isDesktop) {
+            const card = document.getElementById('card3d');
+            const logo = document.getElementById('logo3d');
+            const title = document.getElementById('title3d');
+
+            document.addEventListener('mousemove', (e) => {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
+                
+                if(card) card.style.transform = `translateZ(20px) rotateY(${xAxis}deg) rotateX(${-yAxis}deg)`;
+                if(logo) logo.style.transform = `translateZ(40px) rotateY(${xAxis * 1.5}deg) rotateX(${-yAxis * 1.5}deg)`;
+                if(title) title.style.transform = `translateZ(30px) rotateY(${xAxis * 0.5}deg) rotateX(${-yAxis * 0.5}deg)`;
+            });
+
+            document.addEventListener('mouseleave', () => {
+                if(card) card.style.transform = `translateZ(0) rotateY(0) rotateX(0)`;
+                if(logo) logo.style.transform = `translateZ(0) rotateY(0) rotateX(0)`;
+                if(title) title.style.transform = `translateZ(0) rotateY(0) rotateX(0)`;
+            });
+        }
+    </script>
+</body>
+</html>
