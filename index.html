@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Control AI</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
 
         :root {
             --bg-blue: #1ab3ff;
@@ -21,6 +21,8 @@
             --opt-c-dark: #3629a3;
             --opt-d: #ffca28;
             --opt-d-dark: #cfa320;
+            --chat-bot: #f0f7ff;
+            --chat-user: #fff0db;
         }
 
         * {
@@ -42,7 +44,6 @@
             color: var(--text-main);
         }
 
-        /* Botón de música flotante */
         .mute-btn {
             position: absolute;
             top: 20px;
@@ -70,32 +71,31 @@
 
         .header-container {
             width: 100%;
-            padding: 30px 20px;
+            padding: 20px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 10;
-            position: relative;
         }
 
         .logo-box {
             position: relative;
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             background: var(--card-white);
-            border-radius: 25px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 0 #cccccc, 0 15px 20px rgba(0,0,0,0.3);
-            border: 4px solid var(--border-cyan);
+            box-shadow: 0 6px 0 #cccccc, 0 10px 15px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-cyan);
             transition: transform 0.3s ease;
         }
 
         .svg-icon {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             fill: none;
             stroke: var(--opt-a);
             stroke-width: 2.5;
@@ -104,22 +104,23 @@
         }
 
         .app-title {
-            margin-top: 1.2rem;
-            font-size: 2.5rem;
+            margin-top: 1rem;
+            font-size: 2rem;
             font-weight: 700;
             letter-spacing: 1px;
             color: var(--card-white);
-            text-shadow: 0 4px 0 var(--border-purple), 0 8px 10px rgba(0,0,0,0.3);
+            text-shadow: 0 3px 0 var(--border-purple), 0 5px 8px rgba(0,0,0,0.3);
             text-align: center;
         }
 
-        .questionnaire-wrapper {
+        .main-wrapper {
             width: 100%;
             max-width: 600px;
-            padding: 0 15px 40px 15px;
+            padding: 0 15px 30px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            flex-grow: 1;
         }
 
         .q-card {
@@ -129,6 +130,10 @@
             box-shadow: 0 10px 0 #e0e0e0, 0 20px 30px rgba(0,0,0,0.2), inset 0 0 0 6px rgba(0, 225, 255, 0.1);
             width: 100%;
             transition: transform 0.3s ease, opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            max-height: 600px;
         }
 
         .q-header {
@@ -166,7 +171,7 @@
         .option-btn {
             border: none;
             color: white;
-            padding: 18px 20px;
+            padding: 16px 20px;
             border-radius: 16px;
             font-size: 1.1rem;
             font-weight: 600;
@@ -174,49 +179,132 @@
             transition: transform 0.1s ease, box-shadow 0.1s ease;
             width: 100%;
             text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             outline: none;
-            touch-action: manipulation;
         }
-
-        .option-btn:active {
-            transform: translateY(6px);
-        }
+        .option-btn:active { transform: translateY(6px); }
 
         .opt-1 { background-color: var(--opt-a); box-shadow: 0 6px 0 var(--opt-a-dark); }
         .opt-1:active { box-shadow: 0 0 0 var(--opt-a-dark); }
-
         .opt-2 { background-color: var(--opt-b); box-shadow: 0 6px 0 var(--opt-b-dark); }
         .opt-2:active { box-shadow: 0 0 0 var(--opt-b-dark); }
-
         .opt-3 { background-color: var(--opt-c); box-shadow: 0 6px 0 var(--opt-c-dark); }
         .opt-3:active { box-shadow: 0 0 0 var(--opt-c-dark); }
-
         .opt-4 { background-color: var(--opt-d); box-shadow: 0 6px 0 var(--opt-d-dark); color: var(--border-purple); }
         .opt-4:active { box-shadow: 0 0 0 var(--opt-d-dark); }
 
-        .fade-out {
-            opacity: 0;
-            transform: scale(0.95);
+        .fade-out { opacity: 0; transform: scale(0.95); }
+
+        /* --- Estilos del Chatbot --- */
+        #chatContainer {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
         }
+
+        .chat-history {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            background-color: #f5f5f5;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+            max-height: 350px;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.4;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bot-bubble {
+            background-color: var(--chat-bot);
+            color: var(--border-purple);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            border: 2px solid var(--border-cyan);
+        }
+
+        .user-bubble {
+            background-color: var(--chat-user);
+            color: var(--opt-a-dark);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            border: 2px solid var(--opt-a);
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border-radius: 12px;
+            border: 2px solid #ccc;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .chat-input:focus { border-color: var(--border-cyan); }
+
+        .chat-send-btn {
+            background-color: var(--opt-b);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            padding: 0 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 0 var(--opt-b-dark);
+        }
+        .chat-send-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 var(--opt-b-dark);
+        }
+
+        .chat-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .chat-opt-btn {
+            background-color: var(--opt-c);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            text-align: left;
+            box-shadow: 0 4px 0 var(--opt-c-dark);
+            transition: transform 0.1s;
+        }
+        .chat-opt-btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--opt-c-dark); }
 
         @media (min-width: 1024px) {
             body { perspective: 1200px; }
-            .header-container { padding: 40px 0; transform-style: preserve-3d; }
-            .logo-box { width: 120px; height: 120px; box-shadow: 0 10px 0 #cccccc, 0 20px 25px rgba(0,0,0,0.3); }
-            .svg-icon { width: 60px; height: 60px; }
-            .app-title { font-size: 3rem; margin-top: 1.5rem; }
-            .questionnaire-wrapper { perspective: 1500px; transform-style: preserve-3d; max-width: 700px; padding: 20px; }
-            .q-card { padding: 40px; box-shadow: 0 15px 0 #e0e0e0, 0 30px 40px rgba(0,0,0,0.3), inset 0 0 0 8px rgba(0, 225, 255, 0.1); }
-            .q-title { font-size: 1.8rem; margin-bottom: 40px; }
-            .option-btn { font-size: 1.2rem; padding: 20px 25px; justify-content: flex-start; text-align: left; }
-            .opt-1 { box-shadow: 0 8px 0 var(--opt-a-dark); }
-            .opt-2 { box-shadow: 0 8px 0 var(--opt-b-dark); }
-            .opt-3 { box-shadow: 0 8px 0 var(--opt-c-dark); }
-            .opt-4 { box-shadow: 0 8px 0 var(--opt-d-dark); }
-            .option-btn:active { transform: translateY(8px); }
+            .main-wrapper { max-width: 700px; }
+            .q-card { max-height: 700px; padding: 40px; }
         }
     </style>
 </head>
@@ -236,70 +324,72 @@
         <h1 class="app-title" id="title3d">Control AI</h1>
     </header>
 
-    <main class="questionnaire-wrapper">
+    <main class="main-wrapper">
         <div class="q-card" id="card3d">
-            <div class="q-header">
-                <span>Cuestionario</span>
-                <span id="progressIndicator">1 / 15</span>
+            
+            <div id="quizContainer">
+                <div class="q-header">
+                    <span>Reflexión</span>
+                    <span id="progressIndicator">1 / 15</span>
+                </div>
+                <h3 class="q-title" id="questionText">¿Qué tan frecuente usas la IA en tus actividades académicas?</h3>
+                <div class="options-grid" id="optionsContainer">
+                    <button class="option-btn opt-1" onclick="nextQuestion()">Constantemente (Para casi todo)</button>
+                    <button class="option-btn opt-2" onclick="nextQuestion()">Frecuentemente (Como apoyo habitual)</button>
+                    <button class="option-btn opt-3" onclick="nextQuestion()">A veces (Solo cuando estoy confundido)</button>
+                    <button class="option-btn opt-4" onclick="nextQuestion()">Nunca (Hago todo manualmente)</button>
+                </div>
             </div>
-            <h3 class="q-title" id="questionText">¿Qué tan frecuente usas la IA en tus actividades académicas?</h3>
-            <div class="options-grid" id="optionsContainer">
-                <button class="option-btn opt-1" onclick="nextQuestion()">
-                    <span id="opt1Text">Constantemente (Para casi todo)</span>
-                </button>
-                <button class="option-btn opt-2" onclick="nextQuestion()">
-                    <span id="opt2Text">Frecuentemente (Como apoyo habitual)</span>
-                </button>
-                <button class="option-btn opt-3" onclick="nextQuestion()">
-                    <span id="opt3Text">A veces (Solo cuando estoy confundido)</span>
-                </button>
-                <button class="option-btn opt-4" onclick="nextQuestion()">
-                    <span id="opt4Text">Nunca (Hago todo manualmente)</span>
-                </button>
+
+            <div id="chatContainer">
+                <div class="q-header">
+                    <span style="color: var(--opt-b);">Asistente ControlAI</span>
+                    <span>Guía Interactiva</span>
+                </div>
+                <div class="chat-history" id="chatHistory">
+                    </div>
+                
+                <div id="chatOptionsArea" class="chat-options" style="display: none; margin-bottom: 10px;">
+                    </div>
+
+                <div class="chat-input-area" id="chatInputArea">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ej: Tengo que hacer un resumen..." autocomplete="off">
+                    <button class="chat-send-btn" onclick="handleUserSubmit()">➤</button>
+                </div>
             </div>
+
         </div>
     </main>
 
     <script>
+        // --- CONTROL DE AUDIO ---
         const bgMusic = document.getElementById('bgMusic');
         const muteBtn = document.getElementById('muteBtn');
-
-        // Control de sonido
         muteBtn.addEventListener('click', () => {
-            if (bgMusic.muted) {
-                bgMusic.muted = false;
-                muteBtn.innerText = '🔊';
-            } else {
-                bgMusic.muted = true;
-                muteBtn.innerText = '🔇';
-            }
+            if (bgMusic.muted) { bgMusic.muted = false; muteBtn.innerText = '🔊'; } 
+            else { bgMusic.muted = true; muteBtn.innerText = '🔇'; }
         });
-
-        // Intentar reproducir al iniciar
-        const playAudio = () => { 
-            bgMusic.play().catch(e => { console.log("Interacción requerida para audio."); }); 
-        };
+        const playAudio = () => { bgMusic.play().catch(e => {}); };
         window.addEventListener('load', playAudio);
         document.addEventListener('click', playAudio, { once: true });
-        document.addEventListener('touchstart', playAudio, { once: true });
 
-        // Preguntas
+        // --- CUESTIONARIO ---
         const questions = [
-            { q: "¿Qué tan frecuente usas la IA en tus actividades académicas / trabajos de clase?", o: ["Constantemente (Para casi todo)", "Frecuentemente (Como apoyo habitual)", "A veces (Solo cuando me estanco)", "Nunca (Hago todo manualmente)"] },
+            { q: "¿Qué tan frecuente usas la IA en tus actividades académicas / trabajos de clase?", o: ["Constantemente", "Frecuentemente", "A veces", "Nunca"] },
             { q: "¿Cuánto tiempo al día pasas utilizando herramientas de IA?", o: ["Más de 4 horas", "Entre 2 y 4 horas", "Menos de 1 hora", "Casi nada"] },
-            { q: "¿Qué tareas podrías hacer por tu cuenta sin ayuda de una IA?", o: ["Muy pocas, dependo de ella", "Solo las más sencillas", "La mayoría, pero tardaría más", "Todas sin problema"] },
-            { q: "¿Has dejado de aprender algo porque la IA lo hace por ti?", o: ["Sí, prefiero que lo resuelva", "A veces, por falta de tiempo", "No, verifico lo que hace", "Nunca, sigo estudiando igual"] },
+            { q: "¿Qué tareas podrías hacer por tu cuenta sin ayuda de una IA?", o: ["Muy pocas", "Las más sencillas", "La mayoría", "Todas sin problema"] },
+            { q: "¿Has dejado de aprender algo porque la IA lo hace por ti?", o: ["Sí, prefiero que lo resuelva", "A veces", "No, verifico lo que hace", "Nunca"] },
             { q: "¿Cuándo fue la última vez que resolviste un problema complejo sin ayuda tecnológica?", o: ["No lo recuerdo", "Hace varias semanas", "Hace unos días", "Hoy mismo"] },
-            { q: "¿Te resulta difícil tomar decisiones sin pedir opinión a una IA?", o: ["Sí, dudo mucho de mí", "A veces prefiero confirmar", "Rara vez le pregunto eso", "No, confío en mi propio criterio"] },
-            { q: "¿Sientes ansiedad o incomodidad cuando no puedes acceder a una IA?", o: ["Mucha, me siento bloqueado", "Me genera algo de estrés", "Casi nada, me adapto", "Nada en absoluto"] },
-            { q: "¿Cuántas veces consultas una IA antes de intentar encontrar una respuesta por tu cuenta?", o: ["Siempre voy directo a la IA", "Lo intento un poco y desisto", "Solo si me estanco mucho", "Primero agoto mis propios recursos"] },
-            { q: "¿Hay alguna tarea en la que dependes demasiado de la IA?", o: ["Redacción y resúmenes", "Resolución de ejercicios matemáticos", "Búsqueda de ideas y creatividad", "No tengo una dependencia fuerte"] },
-            { q: "¿Qué has aprendido realmente gracias a la IA y qué solo has copiado?", o: ["Siento que en su mayoría he copiado", "He aprendido algunas cosas nuevas", "Mitad y mitad", "Realmente he aprendido y comprendido"] },
-            { q: "¿Confías más en tu criterio o en las respuestas de una IA?", o: ["Confío ciegamente en la IA", "En la IA, pero trato de revisar", "Confío más en mi conocimiento", "Solo confío en mi propio criterio"] },
-            { q: "¿Crees que tu creatividad ha mejorado o disminuido desde que empezaste a usar IA?", o: ["Ha disminuido, pienso menos por mí", "Se mantiene igual", "Ha mejorado un poco", "Me ha potenciado la imaginación enormemente"] },
-            { q: "¿Qué ganarías si redujeras tu uso de IA durante una semana?", o: ["Perdería mucho tiempo", "Estaría un poco frustrado", "Mejoraría mi concentración", "Sería mucho más independiente"] },
-            { q: "¿Cuál sería tu primer paso para reducir gradualmente su uso?", o: ["No estoy seguro", "Poner límites de tiempo diarios", "Intentar primero por mi cuenta siempre", "Desinstalar atajos temporalmente"] },
-            { q: "¿Cómo imaginas tu rutina diaria si usaras la IA solo cuando fuera estrictamente necesaria?", o: ["Sería muy lenta y pesada", "Requeriría mucho más esfuerzo mental", "Sería más productiva a largo plazo", "Me haría sentir más realizado e inteligente"] }
+            { q: "¿Te resulta difícil tomar decisiones sin pedir opinión a una IA?", o: ["Sí, dudo mucho", "A veces", "Rara vez", "No confío en mi criterio"] },
+            { q: "¿Sientes ansiedad o incomodidad cuando no puedes acceder a una IA?", o: ["Mucha", "Un poco", "Casi nada", "Nada en absoluto"] },
+            { q: "¿Cuántas veces consultas una IA antes de intentar encontrar una respuesta por tu cuenta?", o: ["Siempre", "A veces", "Rara vez", "Primero uso mis recursos"] },
+            { q: "¿Hay alguna tarea en la que dependes demasiado de la IA?", o: ["Redacción", "Matemáticas", "Ideas", "No tengo dependencia"] },
+            { q: "¿Qué has aprendido realmente gracias a la IA y qué solo has copiado?", o: ["Mayormente copiado", "Algunas cosas", "Mitad y mitad", "He aprendido mucho"] },
+            { q: "¿Confías más en tu criterio o en las respuestas de una IA?", o: ["Confío en la IA", "Trato de revisar", "En mi conocimiento", "Solo en mi criterio"] },
+            { q: "¿Crees que tu creatividad ha mejorado o disminuido desde que empezaste a usar IA?", o: ["Ha disminuido", "Se mantiene", "Ha mejorado", "Me ha potenciado"] },
+            { q: "¿Qué ganarías si redujeras tu uso de IA durante una semana?", o: ["Perdería tiempo", "Frustración", "Mejor concentración", "Independencia"] },
+            { q: "¿Cuál sería tu primer paso para reducir gradualmente su uso?", o: ["No sé", "Límites de tiempo", "Intentar yo primero", "Desinstalar atajos"] },
+            { q: "¿Cómo imaginas tu rutina diaria si usaras la IA solo cuando fuera estrictamente necesaria?", o: ["Muy lenta", "Más esfuerzo mental", "Más productiva", "Más inteligente"] }
         ];
 
         let currentIndex = 0;
@@ -314,44 +404,152 @@
                 if (currentIndex < questions.length) {
                     document.getElementById('progressIndicator').innerText = `${currentIndex + 1} / 15`;
                     document.getElementById('questionText').innerText = questions[currentIndex].q;
-                    document.getElementById('opt1Text').innerText = questions[currentIndex].o[0];
-                    document.getElementById('opt2Text').innerText = questions[currentIndex].o[1];
-                    document.getElementById('opt3Text').innerText = questions[currentIndex].o[2];
-                    document.getElementById('opt4Text').innerText = questions[currentIndex].o[3];
+                    const btns = document.querySelectorAll('#optionsContainer .option-btn');
+                    for(let i=0; i<4; i++) btns[i].innerText = questions[currentIndex].o[i];
                 } else {
+                    // Cuestionario completado -> Mostrar opción de Chat
                     document.getElementById('progressIndicator').innerText = "Completado";
-                    document.getElementById('questionText').innerText = "¡Gracias por reflexionar sobre tu uso de la IA! Es el primer paso para retomar el control.";
+                    document.getElementById('questionText').innerText = "¡Excelente reflexión! Ahora, en lugar de que una IA haga tu próxima tarea, dejemos que ControlAI te guíe para que la hagas TÚ mismo.";
                     document.getElementById('optionsContainer').innerHTML = `
-                        <button class="option-btn opt-2" onclick="location.reload()">
-                            <span>Volver a intentar</span>
+                        <button class="option-btn opt-1" onclick="startChat()" style="font-size: 1.3rem; padding: 20px;">
+                            💬 Hablar con ControlAI
+                        </button>
+                        <button class="option-btn opt-3" onclick="location.reload()">
+                            Volver a intentar el test
                         </button>`;
                 }
-
                 card.classList.remove('fade-out');
             }, 300);
         }
 
-        // Efecto 3D Desktop
-        const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-        if (isDesktop) {
-            const card = document.getElementById('card3d');
-            const logo = document.getElementById('logo3d');
-            const title = document.getElementById('title3d');
+        // --- LÓGICA DEL CHATBOT ---
+        let chatStep = 0;
 
-            document.addEventListener('mousemove', (e) => {
-                const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
-                const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
-                
-                if(card) card.style.transform = `translateZ(20px) rotateY(${xAxis}deg) rotateX(${-yAxis}deg)`;
-                if(logo) logo.style.transform = `translateZ(40px) rotateY(${xAxis * 1.5}deg) rotateX(${-yAxis * 1.5}deg)`;
-                if(title) title.style.transform = `translateZ(30px) rotateY(${xAxis * 0.5}deg) rotateX(${-yAxis * 0.5}deg)`;
-            });
+        function startChat() {
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('chatContainer').style.display = 'flex';
+            addBubble("¡Hola! Soy ControlAI. En lugar de hacerte el trabajo, te ayudaré a organizar tu mente. ¿Qué tarea académica tienes que resolver hoy? (Escribe abajo)", "bot");
+        }
 
-            document.addEventListener('mouseleave', () => {
-                if(card) card.style.transform = `translateZ(0) rotateY(0) rotateX(0)`;
-                if(logo) logo.style.transform = `translateZ(0) rotateY(0) rotateX(0)`;
-                if(title) title.style.transform = `translateZ(0) rotateY(0) rotateX(0)`;
+        function addBubble(text, sender) {
+            const chatHistory = document.getElementById('chatHistory');
+            const bubble = document.createElement('div');
+            bubble.classList.add('chat-bubble', sender === 'bot' ? 'bot-bubble' : 'user-bubble');
+            bubble.innerText = text;
+            chatHistory.appendChild(bubble);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        function handleUserSubmit() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+            
+            addBubble(text, "user");
+            input.value = "";
+            document.getElementById('chatInputArea').style.display = 'none'; // Ocultar input texto
+            
+            setTimeout(() => { processBotLogic(text); }, 600);
+        }
+
+        function handleOptionClick(btnText, nextLogicID) {
+            addBubble(btnText, "user");
+            document.getElementById('chatOptionsArea').style.display = 'none';
+            document.getElementById('chatOptionsArea').innerHTML = ''; // limpiar botones
+            
+            setTimeout(() => { triggerBotResponse(nextLogicID); }, 600);
+        }
+
+        function createOptions(optionsArray) {
+            const optionsArea = document.getElementById('chatOptionsArea');
+            optionsArea.innerHTML = '';
+            optionsArray.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.classList.add('chat-opt-btn');
+                btn.innerText = opt.text;
+                btn.onclick = () => handleOptionClick(opt.text, opt.next);
+                optionsArea.appendChild(btn);
             });
+            optionsArea.style.display = 'flex';
+            const chatHistory = document.getElementById('chatHistory');
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        function processBotLogic(userText) {
+            let lowerText = userText.toLowerCase();
+            let response = "";
+            let opts = [];
+
+            if (lowerText.includes("resum") || lowerText.includes("leer")) {
+                response = "Entiendo, tienes que leer y resumir información. El mayor error es dejar que la IA lea por ti. ¿Qué es lo primero que debes hacer?";
+                opts = [
+                    { text: "Leer el texto completo yo mismo para entenderlo.", next: "read_1" },
+                    { text: "Buscar las palabras clave.", next: "read_2" }
+                ];
+            } else if (lowerText.includes("ensayo") || lowerText.includes("escribir") || lowerText.includes("redactar")) {
+                response = "Escribir un ensayo desarrolla tu pensamiento crítico. Para empezar sin IA, ¿en qué fase te encuentras?";
+                opts = [
+                    { text: "No tengo idea de qué escribir.", next: "write_1" },
+                    { text: "Tengo la idea, me falta la estructura.", next: "write_2" }
+                ];
+            } else if (lowerText.includes("mate") || lowerText.includes("ejercicio") || lowerText.includes("problema")) {
+                response = "Resolver problemas matemáticos fortalece tu lógica. Si te atrancas, ¿qué es lo mejor que puedes hacer?";
+                opts = [
+                    { text: "Revisar los apuntes o fórmulas de clase.", next: "math_1" },
+                    { text: "Dividir el problema en partes más pequeñas.", next: "math_1" }
+                ];
+            } else {
+                response = "¡Excelente! Trabajar en eso por tu cuenta te hará más capaz. Para organizar tu mente, ¿cuál es tu mayor obstáculo ahora mismo?";
+                opts = [
+                    { text: "No sé por dónde empezar.", next: "gen_1" },
+                    { text: "Me distraigo fácilmente.", next: "gen_2" }
+                ];
+            }
+
+            addBubble(response, "bot");
+            createOptions(opts);
+        }
+
+        function triggerBotResponse(logicID) {
+            let response = "";
+            let opts = [];
+            let showInputText = false;
+
+            switch(logicID) {
+                case "read_1":
+                case "read_2":
+                    response = "¡Exacto! Toma un lápiz y subraya las 3 ideas principales. Una vez hecho, intenta explicarlas en voz alta. ¿Ves cómo no necesitabas IA para esto?";
+                    opts = [{ text: "¡Tienes razón, empezaré ahora!", next: "end" }];
+                    break;
+                case "write_1":
+                    response = "No te bloquees. Haz una 'lluvia de ideas' durante 5 minutos en un papel sin importar si son buenas o malas. Luego elige la mejor. ¿Te parece un buen plan?";
+                    opts = [{ text: "Sí, tomaré papel y lápiz ahora.", next: "end" }];
+                    break;
+                case "write_2":
+                    response = "Perfecto. Haz un esqueleto: 1) Introducción (tu tesis), 2) Desarrollo (3 argumentos), 3) Conclusión. Escribe los títulos primero. ¡Puedes hacerlo!";
+                    opts = [{ text: "Genial, crearé mi esqueleto.", next: "end" }];
+                    break;
+                case "math_1":
+                    response = "¡Muy bien! Identifica los datos que tienes y la incógnita. Si no sale a la primera, inténtalo de nuevo, el cerebro aprende de los errores, no de las respuestas automáticas.";
+                    opts = [{ text: "Voy a intentar plantearlo de nuevo.", next: "end" }];
+                    break;
+                case "gen_1":
+                    response = "Cuando una tarea parece gigante, divídela. ¿Cuál es el paso más pequeñito y ridículo que puedes hacer ahora mismo? (Ej. 'Crear el documento de Word' o 'Leer el título').";
+                    opts = [{ text: "Haré el primer pequeño paso.", next: "end" }];
+                    break;
+                case "gen_2":
+                    response = "Apaga el celular, cierra las otras pestañas y pon un temporizador de 15 minutos. Solo concéntrate ese tiempo. ¿Aceptas el reto?";
+                    opts = [{ text: "Acepto el reto de los 15 minutos.", next: "end" }];
+                    break;
+                case "end":
+                    response = "¡Esa es la actitud! Recuerda: La tecnología es una herramienta, pero TÚ eres la mente maestra. ¡Cierra esta pestaña y ve a brillar!";
+                    document.getElementById('chatInputArea').style.display = 'none';
+                    break;
+            }
+
+            addBubble(response, "bot");
+            if (opts.length > 0) createOptions(opts);
+            if (showInputText) document.getElementById('chatInputArea').style.display = 'flex';
         }
     </script>
 </body>
