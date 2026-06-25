@@ -194,7 +194,6 @@
 
         .fade-out { opacity: 0; transform: scale(0.95); }
 
-        /* --- Estilos del Chatbot --- */
         #chatContainer {
             display: none;
             flex-direction: column;
@@ -362,7 +361,6 @@
     </main>
 
     <script>
-        // --- CONTROL DE AUDIO ---
         const bgMusic = document.getElementById('bgMusic');
         const muteBtn = document.getElementById('muteBtn');
         muteBtn.addEventListener('click', () => {
@@ -373,7 +371,6 @@
         window.addEventListener('load', playAudio);
         document.addEventListener('click', playAudio, { once: true });
 
-        // --- CUESTIONARIO ---
         const questions = [
             { q: "¿Qué tan frecuente usas la IA en tus actividades académicas / trabajos de clase?", o: ["Constantemente", "Frecuentemente", "A veces", "Nunca"] },
             { q: "¿Cuánto tiempo al día pasas utilizando herramientas de IA?", o: ["Más de 4 horas", "Entre 2 y 4 horas", "Menos de 1 hora", "Casi nada"] },
@@ -407,7 +404,6 @@
                     const btns = document.querySelectorAll('#optionsContainer .option-btn');
                     for(let i=0; i<4; i++) btns[i].innerText = questions[currentIndex].o[i];
                 } else {
-                    // Cuestionario completado -> Mostrar opción de Chat
                     document.getElementById('progressIndicator').innerText = "Completado";
                     document.getElementById('questionText').innerText = "¡Excelente reflexión! Ahora, en lugar de que una IA haga tu próxima tarea, dejemos que ControlAI te guíe para que la hagas TÚ mismo.";
                     document.getElementById('optionsContainer').innerHTML = `
@@ -422,13 +418,12 @@
             }, 300);
         }
 
-        // --- LÓGICA DEL CHATBOT ---
         let chatStep = 0;
 
         function startChat() {
             document.getElementById('quizContainer').style.display = 'none';
             document.getElementById('chatContainer').style.display = 'flex';
-            addBubble("¡Hola! Soy ControlAI. En lugar de hacerte el trabajo, te ayudaré a organizar tu mente. ¿Qué tarea académica tienes que resolver hoy? (Escribe abajo)", "bot");
+            addBubble("¡Hola! Soy ControlAI. En lugar de hacerte el trabajo, te ayudaré a organizar tu mente. ¿Qué tarea académica tienes que resolver hoy?", "bot");
         }
 
         function addBubble(text, sender) {
@@ -447,7 +442,7 @@
             
             addBubble(text, "user");
             input.value = "";
-            document.getElementById('chatInputArea').style.display = 'none'; // Ocultar input texto
+            document.getElementById('chatInputArea').style.display = 'none'; 
             
             setTimeout(() => { processBotLogic(text); }, 600);
         }
@@ -455,7 +450,7 @@
         function handleOptionClick(btnText, nextLogicID) {
             addBubble(btnText, "user");
             document.getElementById('chatOptionsArea').style.display = 'none';
-            document.getElementById('chatOptionsArea').innerHTML = ''; // limpiar botones
+            document.getElementById('chatOptionsArea').innerHTML = ''; 
             
             setTimeout(() => { triggerBotResponse(nextLogicID); }, 600);
         }
@@ -480,7 +475,25 @@
             let response = "";
             let opts = [];
 
-            if (lowerText.includes("resum") || lowerText.includes("leer")) {
+            if (lowerText.includes("240 km") || lowerText.includes("automóvil recorre") || lowerText.includes("automovil recorre")) {
+                response = "Respuesta:\nVelocidad = 240 ÷ 3 = 80 km/h\nDistancia en 5 horas = 80 × 5 = 400 km";
+                opts = [
+                    { text: "¡Entendido!", next: "end" },
+                    { text: "Lo resolveré yo mismo la próxima", next: "end" }
+                ];
+            } else if (lowerText.includes("dióxido de carbono") || lowerText.includes("co2") || lowerText.includes("calentamiento global") || lowerText.includes("dioxido de carbono")) {
+                response = "Respuesta:\nPorque el CO₂ es un gas de efecto invernadero que retiene parte del calor que la Tierra emite al espacio, aumentando la temperatura promedio del planeta.";
+                opts = [
+                    { text: "Comprendido", next: "end" },
+                    { text: "Gracias por la información", next: "end" }
+                ];
+            } else if (lowerText.includes("tesis") && lowerText.includes("argumento")) {
+                response = "Respuesta:\nLa tesis es la idea o postura principal que el autor defiende, mientras que los argumentos son las razones, evidencias o ejemplos que utiliza para sustentar esa postura.";
+                opts = [
+                    { text: "Anotado", next: "end" },
+                    { text: "Diferencia clara", next: "end" }
+                ];
+            } else if (lowerText.includes("resum") || lowerText.includes("leer")) {
                 response = "Entiendo, tienes que leer y resumir información. El mayor error es dejar que la IA lea por ti. ¿Qué es lo primero que debes hacer?";
                 opts = [
                     { text: "Leer el texto completo yo mismo para entenderlo.", next: "read_1" },
@@ -534,7 +547,7 @@
                     opts = [{ text: "Voy a intentar plantearlo de nuevo.", next: "end" }];
                     break;
                 case "gen_1":
-                    response = "Cuando una tarea parece gigante, divídela. ¿Cuál es el paso más pequeñito y ridículo que puedes hacer ahora mismo? (Ej. 'Crear el documento de Word' o 'Leer el título').";
+                    response = "Cuando una tarea parece gigante, divídela. ¿Cuál es el paso más pequeñito y ridículo que puedes hacer ahora mismo?";
                     opts = [{ text: "Haré el primer pequeño paso.", next: "end" }];
                     break;
                 case "gen_2":
@@ -542,8 +555,13 @@
                     opts = [{ text: "Acepto el reto de los 15 minutos.", next: "end" }];
                     break;
                 case "end":
-                    response = "¡Esa es la actitud! Recuerda: La tecnología es una herramienta, pero TÚ eres la mente maestra. ¡Cierra esta pestaña y ve a brillar!";
+                    response = "¡Esa es la actitud! Recuerda: La tecnología es una herramienta, pero TÚ eres la mente maestra.";
+                    opts = [{ text: "Volver a preguntar", next: "volver_a_preguntar" }];
                     document.getElementById('chatInputArea').style.display = 'none';
+                    break;
+                case "volver_a_preguntar":
+                    response = "¿Qué otra tarea o duda tienes en mente?";
+                    showInputText = true;
                     break;
             }
 
