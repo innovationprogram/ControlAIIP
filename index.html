@@ -46,14 +46,14 @@
 
         .mute-btn {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             background: var(--card-white);
             border: 3px solid var(--border-cyan);
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 24px;
+            width: 45px;
+            height: 45px;
+            font-size: 20px;
             cursor: pointer;
             z-index: 100;
             box-shadow: 0 4px 0 #cccccc;
@@ -71,7 +71,7 @@
 
         .header-container {
             width: 100%;
-            padding: 20px 20px;
+            padding: 20px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -81,10 +81,10 @@
 
         .logo-box {
             position: relative;
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: var(--card-white);
-            border-radius: 20px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -94,8 +94,8 @@
         }
 
         .svg-icon {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             fill: none;
             stroke: var(--opt-a);
             stroke-width: 2.5;
@@ -104,8 +104,8 @@
         }
 
         .app-title {
-            margin-top: 1rem;
-            font-size: 2rem;
+            margin-top: 0.8rem;
+            font-size: 1.8rem;
             font-weight: 700;
             letter-spacing: 1px;
             color: var(--card-white);
@@ -125,23 +125,23 @@
 
         .q-card {
             background: var(--card-white);
-            border-radius: 24px;
-            padding: 30px 20px;
-            box-shadow: 0 10px 0 #e0e0e0, 0 20px 30px rgba(0,0,0,0.2), inset 0 0 0 6px rgba(0, 225, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px 15px;
+            box-shadow: 0 8px 0 #e0e0e0, 0 15px 25px rgba(0,0,0,0.2), inset 0 0 0 4px rgba(0, 225, 255, 0.1);
             width: 100%;
             transition: transform 0.3s ease, opacity 0.3s ease;
             display: flex;
             flex-direction: column;
             height: 100%;
-            max-height: 600px;
+            max-height: 80vh;
         }
 
         .q-header {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--opt-a);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
             font-weight: 700;
             text-align: center;
             display: flex;
@@ -149,13 +149,13 @@
         }
 
         .q-title {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             line-height: 1.3;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-weight: 600;
             text-align: center;
             color: var(--border-purple);
-            min-height: 80px;
+            min-height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -164,16 +164,17 @@
         .options-grid {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
             width: 100%;
+            overflow-y: auto;
         }
 
         .option-btn {
             border: none;
             color: white;
-            padding: 16px 20px;
-            border-radius: 16px;
-            font-size: 1.1rem;
+            padding: 14px 15px;
+            border-radius: 12px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.1s ease, box-shadow 0.1s ease;
@@ -181,15 +182,15 @@
             text-align: center;
             outline: none;
         }
-        .option-btn:active { transform: translateY(6px); }
+        .option-btn:active { transform: translateY(4px); }
 
-        .opt-1 { background-color: var(--opt-a); box-shadow: 0 6px 0 var(--opt-a-dark); }
+        .opt-1 { background-color: var(--opt-a); box-shadow: 0 4px 0 var(--opt-a-dark); }
         .opt-1:active { box-shadow: 0 0 0 var(--opt-a-dark); }
-        .opt-2 { background-color: var(--opt-b); box-shadow: 0 6px 0 var(--opt-b-dark); }
+        .opt-2 { background-color: var(--opt-b); box-shadow: 0 4px 0 var(--opt-b-dark); }
         .opt-2:active { box-shadow: 0 0 0 var(--opt-b-dark); }
-        .opt-3 { background-color: var(--opt-c); box-shadow: 0 6px 0 var(--opt-c-dark); }
+        .opt-3 { background-color: var(--opt-c); box-shadow: 0 4px 0 var(--opt-c-dark); }
         .opt-3:active { box-shadow: 0 0 0 var(--opt-c-dark); }
-        .opt-4 { background-color: var(--opt-d); box-shadow: 0 6px 0 var(--opt-d-dark); color: var(--border-purple); }
+        .opt-4 { background-color: var(--opt-d); box-shadow: 0 4px 0 var(--opt-d-dark); color: var(--border-purple); }
         .opt-4:active { box-shadow: 0 0 0 var(--opt-d-dark); }
 
         .fade-out { opacity: 0; transform: scale(0.95); }
@@ -199,6 +200,7 @@
             flex-direction: column;
             height: 100%;
             width: 100%;
+            flex-grow: 1;
         }
 
         .chat-history {
@@ -207,21 +209,21 @@
             padding: 10px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-bottom: 15px;
+            gap: 12px;
+            margin-bottom: 10px;
             border-radius: 12px;
             background-color: #f5f5f5;
             box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
-            max-height: 350px;
+            min-height: 200px;
         }
 
         .chat-bubble {
-            max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 16px;
-            font-size: 1rem;
+            max-width: 90%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 0.95rem;
             font-weight: 500;
-            line-height: 1.4;
+            line-height: 1.3;
             animation: fadeIn 0.3s ease forwards;
         }
 
@@ -248,40 +250,41 @@
 
         .chat-input-area {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .chat-input {
             flex-grow: 1;
-            padding: 12px 15px;
-            border-radius: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
             border: 2px solid #ccc;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
             transition: border-color 0.2s;
+            width: 100%;
         }
         .chat-input:focus { border-color: var(--border-cyan); }
 
         .chat-send-btn {
             background-color: var(--opt-b);
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             color: white;
-            padding: 0 20px;
-            font-size: 1.2rem;
+            padding: 0 15px;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 0 var(--opt-b-dark);
+            box-shadow: 0 3px 0 var(--opt-b-dark);
         }
         .chat-send-btn:active {
-            transform: translateY(4px);
+            transform: translateY(3px);
             box-shadow: 0 0 0 var(--opt-b-dark);
         }
 
         .chat-options {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             margin-top: 5px;
         }
 
@@ -289,21 +292,35 @@
             background-color: var(--opt-c);
             color: white;
             border: none;
-            padding: 12px;
-            border-radius: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             text-align: left;
-            box-shadow: 0 4px 0 var(--opt-c-dark);
+            box-shadow: 0 3px 0 var(--opt-c-dark);
             transition: transform 0.1s;
         }
-        .chat-opt-btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--opt-c-dark); }
+        .chat-opt-btn:active { transform: translateY(3px); box-shadow: 0 0 0 var(--opt-c-dark); }
 
+        /* Efectos 3D y mejoras solo para PC */
         @media (min-width: 1024px) {
             body { perspective: 1200px; }
             .main-wrapper { max-width: 700px; }
-            .q-card { max-height: 700px; padding: 40px; }
+            .q-card { max-height: 700px; padding: 40px; box-shadow: 0 15px 0 #e0e0e0, 0 30px 40px rgba(0,0,0,0.3), inset 0 0 0 8px rgba(0, 225, 255, 0.1); }
+            .logo-box { width: 100px; height: 100px; }
+            .svg-icon { width: 50px; height: 50px; }
+            .app-title { font-size: 2.5rem; }
+            .q-title { font-size: 1.6rem; }
+            .option-btn { font-size: 1.2rem; padding: 18px 20px; }
+            .opt-1 { box-shadow: 0 8px 0 var(--opt-a-dark); }
+            .opt-2 { box-shadow: 0 8px 0 var(--opt-b-dark); }
+            .opt-3 { box-shadow: 0 8px 0 var(--opt-c-dark); }
+            .opt-4 { box-shadow: 0 8px 0 var(--opt-d-dark); }
+            .option-btn:active { transform: translateY(8px); }
+            .chat-bubble { font-size: 1.1rem; padding: 14px 18px; }
+            .chat-input { padding: 14px 18px; font-size: 1.1rem; }
+            .chat-send-btn { padding: 0 25px; font-size: 1.4rem; }
         }
     </style>
 </head>
@@ -346,10 +363,10 @@
                     <span>Guía Interactiva</span>
                 </div>
                 <div class="chat-history" id="chatHistory">
-                    </div>
+                </div>
                 
                 <div id="chatOptionsArea" class="chat-options" style="display: none; margin-bottom: 10px;">
-                    </div>
+                </div>
 
                 <div class="chat-input-area" id="chatInputArea">
                     <input type="text" class="chat-input" id="chatInput" placeholder="Ej: Tengo que hacer un resumen..." autocomplete="off">
@@ -405,25 +422,27 @@
                     for(let i=0; i<4; i++) btns[i].innerText = questions[currentIndex].o[i];
                 } else {
                     document.getElementById('progressIndicator').innerText = "Completado";
-                    document.getElementById('questionText').innerText = "¡Excelente reflexión! Ahora, en lugar de que una IA haga tu próxima tarea, dejemos que ControlAI te guíe para que la hagas TÚ mismo.";
+                    document.getElementById('questionText').innerText = "¡Excelente reflexión! Ahora, ControlAI te guiará paso a paso sin darte la respuesta directa.";
                     document.getElementById('optionsContainer').innerHTML = `
-                        <button class="option-btn opt-1" onclick="startChat()" style="font-size: 1.3rem; padding: 20px;">
+                        <button class="option-btn opt-1" onclick="startChat()" style="font-size: 1.1rem; padding: 15px;">
                             💬 Hablar con ControlAI
                         </button>
-                        <button class="option-btn opt-3" onclick="location.reload()">
-                            Volver a intentar el test
+                        <button class="option-btn opt-3" onclick="location.reload()" style="font-size: 1.1rem; padding: 15px;">
+                            Volver a intentar
                         </button>`;
                 }
                 card.classList.remove('fade-out');
             }, 300);
         }
 
-        let chatStep = 0;
+        let groqKey = "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";
+        let activeQuiz = [];
+        let activeQuizIndex = 0;
 
         function startChat() {
             document.getElementById('quizContainer').style.display = 'none';
             document.getElementById('chatContainer').style.display = 'flex';
-            addBubble("¡Hola! Soy ControlAI. En lugar de hacerte el trabajo, te ayudaré a organizar tu mente. ¿Qué tarea académica tienes que resolver hoy?", "bot");
+            addBubble("¡Hola! Soy ControlAI. Dime qué necesitas resolver y generaré un pequeño cuestionario para guiarte a la respuesta por ti mismo.", "bot");
         }
 
         function addBubble(text, sender) {
@@ -444,130 +463,122 @@
             input.value = "";
             document.getElementById('chatInputArea').style.display = 'none'; 
             
-            setTimeout(() => { processBotLogic(text); }, 600);
+            addBubble("Analizando y creando cuestionario...", "bot");
+            fetchGroqQuiz(text);
         }
 
-        function handleOptionClick(btnText, nextLogicID) {
-            addBubble(btnText, "user");
-            document.getElementById('chatOptionsArea').style.display = 'none';
-            document.getElementById('chatOptionsArea').innerHTML = ''; 
+        async function fetchGroqQuiz(prompt) {
+            try {
+                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${groqKey}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: "llama-3.1-8b-instant",
+                        messages: [
+                            {
+                                role: "system", 
+                                content: "Eres un tutor. Responde ÚNICAMENTE con un arreglo JSON válido y estricto. NO uses markdown ni texto adicional. Formato: [{\"q\":\"pregunta\",\"o\":[\"op1\",\"op2\",\"op3\",\"op4\"],\"c\":0}] Crea 5 preguntas de opción múltiple relacionadas al problema del usuario."
+                            },
+                            {
+                                role: "user",
+                                content: prompt
+                            }
+                        ],
+                        temperature: 0.3
+                    })
+                });
+                
+                const data = await response.json();
+                let content = data.choices[0].message.content;
+                let jsonMatch = content.match(/\[[\s\S]*\]/);
+                activeQuiz = JSON.parse(jsonMatch[0]);
+                activeQuizIndex = 0;
+                renderCurrentQuizStep();
+                
+            } catch (error) {
+                addBubble("Hubo un error al generar el cuestionario con Llama. Intenta detallar más tu pregunta.", "bot");
+                document.getElementById('chatInputArea').style.display = 'flex';
+            }
+        }
+
+        async function fetchGroqExtra(wrongQuestion) {
+            try {
+                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${groqKey}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: "llama-3.1-8b-instant",
+                        messages: [
+                            {
+                                role: "system", 
+                                content: "El usuario se equivocó. Responde ÚNICAMENTE con JSON estricto. Un array con 1 pregunta extra fácil para que entienda. Formato: [{\"q\":\"pregunta\",\"o\":[\"op1\",\"op2\",\"op3\",\"op4\"],\"c\":0}]"
+                            },
+                            {
+                                role: "user",
+                                content: wrongQuestion
+                            }
+                        ],
+                        temperature: 0.3
+                    })
+                });
+                
+                const data = await response.json();
+                let content = data.choices[0].message.content;
+                let jsonMatch = content.match(/\[[\s\S]*\]/);
+                let extraQ = JSON.parse(jsonMatch[0])[0];
+                activeQuiz.splice(activeQuizIndex, 0, extraQ);
+                renderCurrentQuizStep();
+            } catch (error) {
+                activeQuizIndex++;
+                renderCurrentQuizStep();
+            }
+        }
+
+        function renderCurrentQuizStep() {
+            document.getElementById('chatOptionsArea').innerHTML = '';
             
-            setTimeout(() => { triggerBotResponse(nextLogicID); }, 600);
-        }
+            if (activeQuizIndex >= activeQuiz.length) {
+                addBubble("¡Excelente! Has completado el cuestionario y descubierto la respuesta por tu cuenta.", "bot");
+                document.getElementById('chatInputArea').style.display = 'flex';
+                return;
+            }
 
-        function createOptions(optionsArray) {
+            let step = activeQuiz[activeQuizIndex];
+            addBubble(`Pregunta ${activeQuizIndex + 1}: ${step.q}`, "bot");
+
             const optionsArea = document.getElementById('chatOptionsArea');
-            optionsArea.innerHTML = '';
-            optionsArray.forEach(opt => {
+            step.o.forEach((optText, i) => {
                 const btn = document.createElement('button');
                 btn.classList.add('chat-opt-btn');
-                btn.innerText = opt.text;
-                btn.onclick = () => handleOptionClick(opt.text, opt.next);
+                btn.innerText = optText;
+                btn.onclick = () => handleQuizAnswer(optText, i, step.c, step.q);
                 optionsArea.appendChild(btn);
             });
             optionsArea.style.display = 'flex';
+            
             const chatHistory = document.getElementById('chatHistory');
             chatHistory.scrollTop = chatHistory.scrollHeight;
         }
 
-        function processBotLogic(userText) {
-            let lowerText = userText.toLowerCase();
-            let response = "";
-            let opts = [];
-
-            if (lowerText.includes("240 km") || lowerText.includes("automóvil recorre") || lowerText.includes("automovil recorre")) {
-                response = "Respuesta:\nVelocidad = 240 ÷ 3 = 80 km/h\nDistancia en 5 horas = 80 × 5 = 400 km";
-                opts = [
-                    { text: "¡Entendido!", next: "end" },
-                    { text: "Lo resolveré yo mismo la próxima", next: "end" }
-                ];
-            } else if (lowerText.includes("dióxido de carbono") || lowerText.includes("co2") || lowerText.includes("calentamiento global") || lowerText.includes("dioxido de carbono")) {
-                response = "Respuesta:\nPorque el CO₂ es un gas de efecto invernadero que retiene parte del calor que la Tierra emite al espacio, aumentando la temperatura promedio del planeta.";
-                opts = [
-                    { text: "Comprendido", next: "end" },
-                    { text: "Gracias por la información", next: "end" }
-                ];
-            } else if (lowerText.includes("tesis") && lowerText.includes("argumento")) {
-                response = "Respuesta:\nLa tesis es la idea o postura principal que el autor defiende, mientras que los argumentos son las razones, evidencias o ejemplos que utiliza para sustentar esa postura.";
-                opts = [
-                    { text: "Anotado", next: "end" },
-                    { text: "Diferencia clara", next: "end" }
-                ];
-            } else if (lowerText.includes("resum") || lowerText.includes("leer")) {
-                response = "Entiendo, tienes que leer y resumir información. El mayor error es dejar que la IA lea por ti. ¿Qué es lo primero que debes hacer?";
-                opts = [
-                    { text: "Leer el texto completo yo mismo para entenderlo.", next: "read_1" },
-                    { text: "Buscar las palabras clave.", next: "read_2" }
-                ];
-            } else if (lowerText.includes("ensayo") || lowerText.includes("escribir") || lowerText.includes("redactar")) {
-                response = "Escribir un ensayo desarrolla tu pensamiento crítico. Para empezar sin IA, ¿en qué fase te encuentras?";
-                opts = [
-                    { text: "No tengo idea de qué escribir.", next: "write_1" },
-                    { text: "Tengo la idea, me falta la estructura.", next: "write_2" }
-                ];
-            } else if (lowerText.includes("mate") || lowerText.includes("ejercicio") || lowerText.includes("problema")) {
-                response = "Resolver problemas matemáticos fortalece tu lógica. Si te atrancas, ¿qué es lo mejor que puedes hacer?";
-                opts = [
-                    { text: "Revisar los apuntes o fórmulas de clase.", next: "math_1" },
-                    { text: "Dividir el problema en partes más pequeñas.", next: "math_1" }
-                ];
+        function handleQuizAnswer(text, selectedIndex, correctIndex, questionText) {
+            addBubble(text, "user");
+            document.getElementById('chatOptionsArea').style.display = 'none';
+            document.getElementById('chatOptionsArea').innerHTML = '';
+            
+            if (selectedIndex === correctIndex) {
+                addBubble("¡Correcto!", "bot");
+                activeQuizIndex++;
+                setTimeout(() => renderCurrentQuizStep(), 800);
             } else {
-                response = "¡Excelente! Trabajar en eso por tu cuenta te hará más capaz. Para organizar tu mente, ¿cuál es tu mayor obstáculo ahora mismo?";
-                opts = [
-                    { text: "No sé por dónde empezar.", next: "gen_1" },
-                    { text: "Me distraigo fácilmente.", next: "gen_2" }
-                ];
+                addBubble("Incorrecto. Analicemos esto con una pregunta extra.", "bot");
+                fetchGroqExtra(questionText);
             }
-
-            addBubble(response, "bot");
-            createOptions(opts);
-        }
-
-        function triggerBotResponse(logicID) {
-            let response = "";
-            let opts = [];
-            let showInputText = false;
-
-            switch(logicID) {
-                case "read_1":
-                case "read_2":
-                    response = "¡Exacto! Toma un lápiz y subraya las 3 ideas principales. Una vez hecho, intenta explicarlas en voz alta. ¿Ves cómo no necesitabas IA para esto?";
-                    opts = [{ text: "¡Tienes razón, empezaré ahora!", next: "end" }];
-                    break;
-                case "write_1":
-                    response = "No te bloquees. Haz una 'lluvia de ideas' durante 5 minutos en un papel sin importar si son buenas o malas. Luego elige la mejor. ¿Te parece un buen plan?";
-                    opts = [{ text: "Sí, tomaré papel y lápiz ahora.", next: "end" }];
-                    break;
-                case "write_2":
-                    response = "Perfecto. Haz un esqueleto: 1) Introducción (tu tesis), 2) Desarrollo (3 argumentos), 3) Conclusión. Escribe los títulos primero. ¡Puedes hacerlo!";
-                    opts = [{ text: "Genial, crearé mi esqueleto.", next: "end" }];
-                    break;
-                case "math_1":
-                    response = "¡Muy bien! Identifica los datos que tienes y la incógnita. Si no sale a la primera, inténtalo de nuevo, el cerebro aprende de los errores, no de las respuestas automáticas.";
-                    opts = [{ text: "Voy a intentar plantearlo de nuevo.", next: "end" }];
-                    break;
-                case "gen_1":
-                    response = "Cuando una tarea parece gigante, divídela. ¿Cuál es el paso más pequeñito y ridículo que puedes hacer ahora mismo?";
-                    opts = [{ text: "Haré el primer pequeño paso.", next: "end" }];
-                    break;
-                case "gen_2":
-                    response = "Apaga el celular, cierra las otras pestañas y pon un temporizador de 15 minutos. Solo concéntrate ese tiempo. ¿Aceptas el reto?";
-                    opts = [{ text: "Acepto el reto de los 15 minutos.", next: "end" }];
-                    break;
-                case "end":
-                    response = "¡Esa es la actitud! Recuerda: La tecnología es una herramienta, pero TÚ eres la mente maestra.";
-                    opts = [{ text: "Volver a preguntar", next: "volver_a_preguntar" }];
-                    document.getElementById('chatInputArea').style.display = 'none';
-                    break;
-                case "volver_a_preguntar":
-                    response = "¿Qué otra tarea o duda tienes en mente?";
-                    showInputText = true;
-                    break;
-            }
-
-            addBubble(response, "bot");
-            if (opts.length > 0) createOptions(opts);
-            if (showInputText) document.getElementById('chatInputArea').style.display = 'flex';
         }
     </script>
 </body>
